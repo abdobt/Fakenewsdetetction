@@ -18,6 +18,7 @@ class Query(ObjectType):
  bg=String(text=String())
  fakenewsdetection=String(text=String())
  tf=String(text=String())
+ wordv=String(text=String())
     # our Resolver method takes the GraphQL context (root, info) as well as
     # Argument (name) for the Field and returns data for the query Response
  def resolve_stopwords(root, info, text):
@@ -32,6 +33,8 @@ class Query(ObjectType):
    return NLP.BagOfWords(text)
  def resolve_tf(root,info,text):
    return NLP.TF_IDF(text)
+ def resolve_wordv(root,info,text):
+   return NLP.WordToVec(text)
  def resolve_fakenewsdetection(root,info,text):
    return fakenewsdetection.detect(text)
 app = Flask(__name__)

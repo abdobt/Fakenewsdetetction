@@ -4,6 +4,7 @@ from nltk import word_tokenize, WordNetLemmatizer, PorterStemmer
 from nltk.corpus import stopwords
 import pandas as pd
 from sklearn.decomposition import PCA
+from gensim.models import Word2Vec
 #-------------------Example----------------------
 example_sent = """This is a sample sentence,
                   showing off the stop words filtration."""
@@ -61,11 +62,10 @@ def TF_IDF(text):
 	df = df.sort_values('TF-IDF', ascending=False)
 	return df
 #----------------------Word2Vec----------------
-# def  WordToVec(text):
-# 	tokens = word_tokenize(text)
-# 	m = Word2Vec(tokens, min_count=1)
-# 	words = list(m.wv.vocab)
-# 	X = m[m.wv.vocab]
-# 	pca = PCA(n_components=2)
-# 	result = pca.fit_transform(X)
-# 	return result
+def  WordToVec(text):
+	tokens = word_tokenize(text)
+	m = Word2Vec(tokens, min_count=1)
+	X = m[m.wv.vocab]
+	pca = PCA(n_components=2)
+	result = pca.fit_transform(X)
+	return result
