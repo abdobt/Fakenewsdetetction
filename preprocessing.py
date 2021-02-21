@@ -38,7 +38,7 @@ data.drop(["link"],axis=1,inplace=True)
 data.drop(["id"],axis=1,inplace=True)
 data.drop(["title"],axis=1,inplace=True)
 #-----------------Preprocessing------------------
-#En enlève les caractères spéciaux
+#On enlève les caractères spéciaux
 data['text'] = data['text'].str.replace('[#,@,&]', '')
 #on conveti les lettres en miniscules
 data['text'] = data['text'].apply(lambda x: x.lower())
@@ -50,7 +50,7 @@ def punctuation_removal(text):
 data['text'] = data['text'].apply(punctuation_removal)
 #Liste des stopwords(the,a ....)
 stop = stopwords.words('english')
-#En supprime les stopwords
+#On supprime les stopwords
 data['text'] = data['text'].apply(lambda x: ' '.join([word for word in x.split() if word not in (stop)]))
 #Déclaration d'un toknizer pour faire la tokenization
 w_tokenizer = nltk.tokenize.WhitespaceTokenizer()
@@ -64,7 +64,7 @@ data["text"] = data["text"].apply(lemmatize_text)
 #Dtokenization après le stemming et lemmetization
 detokenizer = TreebankWordDetokenizer()
 data ["text"]= data["text"].apply(detokenizer.detokenize)
-#Enregistrement du dataframe dans un fichier real.csv qui sera ajouter à mongodb
+#------ Enregistrement du dataframe dans un fichier real.csv qui sera ajouter à mongodb
 # data.to_csv('file.csv')
 #-----------------Visualisation du dataset---------
 #Affichage des premières lignes
@@ -86,15 +86,14 @@ plt.imshow(wordcloud, interpolation='bilinear')
 plt.axis("off")
 plt.show()
 # Affichage de nuage des mots les plus utilisés dans les fakes news
-from wordcloud import WordCloud
-real_data = data[data['target'] == 'true']
-all_words =  ''.join([text for text in real_data.text])
-wordcloud = WordCloud(width= 800, height= 500, max_font_size = 110,
- collocations = False).generate(all_words)
-plt.figure(figsize=(10,7))
-plt.imshow(wordcloud, interpolation='bilinear')
-plt.axis('off')
-plt.show()
+# real_data = data[data['target'] == 'true']
+# all_words =  ''.join([text for text in real_data.text])
+# wordcloud = WordCloud(width= 800, height= 500, max_font_size = 110,
+#  collocations = False).generate(all_words)
+# plt.figure(figsize=(10,7))
+# plt.imshow(wordcloud, interpolation='bilinear')
+# plt.axis('off')
+# plt.show()
 token_space = tokenize.WhitespaceTokenizer()
 #Fonction qui calcule le nombre de fois que un mot est cité et les affiche dans un graphe
 def counter(text, column_text, quantity):

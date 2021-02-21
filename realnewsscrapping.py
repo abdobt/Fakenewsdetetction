@@ -144,6 +144,7 @@ for i in np.arange(2,35):
           list_titles.append(title)
      except:
       continue
+#Sauvegarde dans fichier .csv qui sera après le preprocessing ajouté à la base de données
 with open('real.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerow(["id", "title", "link", "text"])

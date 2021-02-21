@@ -8,17 +8,25 @@ from graphene import ObjectType, String, Schema
 from flask import Flask,request
 import json
 import NLP
+import numpy as np
 import fakenewsdetection
 class Query(ObjectType):
 # défintion des champs du query chaque champs prend en argument un string
+ #pour stopwords
  stopwords = String(text=String())
+ #pour tokenization
  tokeniz=String(text=String())
+ #pour la lemmitization
  lem=String(text=String())
+ #pour stemming
  stem=String(text=String())
+ #pour bag of words
  bg=String(text=String())
- fakenewsdetection=String(text=String())
+ #pour tf-idf
  tf=String(text=String())
+ #pour word2vec
  wordv=String(text=String())
+ fakenewsdetection=String(text=String())
     # our Resolver method takes the GraphQL context (root, info) as well as
     # Argument (name) for the Field and returns data for the query Response
  def resolve_stopwords(root, info, text):
@@ -36,7 +44,7 @@ class Query(ObjectType):
  def resolve_wordv(root,info,text):
    return NLP.WordToVec(text)
  def resolve_fakenewsdetection(root,info,text):
-   return fakenewsdetection.detect(text)
+   return fakenewsdetection.detecte(text)
 app = Flask(__name__)
 #défintion d'un endpoint
 @app.route('/',methods=['POST'])
@@ -44,5 +52,7 @@ app = Flask(__name__)
 @cross_origin()
 def hello_world():
     data = json.loads(request.data)
+    #Création d'une shéma
     schema = Schema(query=Query)
+    #on retourne le resultat sous forme json après l'éxecution
     return json.dumps(schema.execute(" ".join(data['query'].split())).data)

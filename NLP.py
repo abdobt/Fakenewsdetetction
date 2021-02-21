@@ -55,11 +55,13 @@ def BagOfWords(text):
 	return(res)
 #-----------------------TF IDF------------
 def TF_IDF(text):
-	tfIdfVectorizer=TfidfVectorizer(use_idf=True)
-	tokens = word_tokenize(text)
-	tfIdf = tfIdfVectorizer.fit_transform(tokens)
-	df = pd.DataFrame(tfIdf[0].T.todense(), index=tfIdfVectorizer.get_feature_names(), columns=["TF-IDF"])
-	df = df.sort_values('TF-IDF', ascending=False)
+	text=[text]
+	tfidf_vectorizer = TfidfVectorizer(use_idf=True)
+	tfidf_vectorizer_vectors = tfidf_vectorizer.fit_transform(text)
+	first_vector_tfidfvectorizer = tfidf_vectorizer_vectors[0]
+	df = pd.DataFrame(first_vector_tfidfvectorizer.T.todense(), index=tfidf_vectorizer.get_feature_names(),
+					  columns=["tfidf"])
+	df.sort_values(by=["tfidf"], ascending=False).head(45)
 	return df
 #----------------------Word2Vec----------------
 def  WordToVec(text):

@@ -129,6 +129,7 @@ for j in np.arange(0,len(l)):
     news_contents.append(final_article)
     list_links.append(link)
     list_titles.append(title)
+#Sauvegarde dans fichier .csv qui sera après le preprocessing ajouté à la base de données
 with open('fake.csv', 'w', newline='') as file:
  writer = csv.writer(file)
  writer.writerow(["id", "title", "link", "text"])
