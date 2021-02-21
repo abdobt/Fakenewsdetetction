@@ -1,7 +1,9 @@
 import numpy as np
-from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from nltk import word_tokenize, WordNetLemmatizer, PorterStemmer
 from nltk.corpus import stopwords
+import pandas as pd
+from sklearn.decomposition import PCA
 #-------------------Example----------------------
 example_sent = """This is a sample sentence,
                   showing off the stop words filtration."""
@@ -50,4 +52,20 @@ def BagOfWords(text):
 	cv=CountVectorizer()
 	res=cv.fit_transform(s).toarray()
 	return(res)
-#-------------------------------------------------
+#-----------------------TF IDF------------
+def TF_IDF(text):
+	tfIdfVectorizer=TfidfVectorizer(use_idf=True)
+	tokens = word_tokenize(text)
+	tfIdf = tfIdfVectorizer.fit_transform(tokens)
+	df = pd.DataFrame(tfIdf[0].T.todense(), index=tfIdfVectorizer.get_feature_names(), columns=["TF-IDF"])
+	df = df.sort_values('TF-IDF', ascending=False)
+	return df
+#----------------------Word2Vec----------------
+# def  WordToVec(text):
+# 	tokens = word_tokenize(text)
+# 	m = Word2Vec(tokens, min_count=1)
+# 	words = list(m.wv.vocab)
+# 	X = m[m.wv.vocab]
+# 	pca = PCA(n_components=2)
+# 	result = pca.fit_transform(X)
+# 	return result
